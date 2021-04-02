@@ -34,25 +34,25 @@
 34 Raw ring values [counts]
 35 Raw ring values [counts]
 36 Raw ring values [counts]
-37 Laser transmission Sensor [counts]
-38 Supply voltage in calibrated units [V*100]
+    37 Laser transmission Sensor [counts]
+    38 Supply voltage in calibrated units [V*100]
 39 External Analog input 1 in calibrated units [V*10000]
-40 Laser Reference sensor in calibrated units [counts]
-41 Depth in calibrated units [counts]
-42 Temperature in calibrated units [counts]
-43 Year
-44 Month
-45 Day of month
-46 Hour
-47 Minute
-48 Second
+    40 Laser Reference sensor in calibrated units [counts]
+    41 Depth in calibrated units [counts]
+    42 Temperature in calibrated units [counts]
+    43 Year
+    44 Month
+    45 Day of month
+    46 Hour
+    47 Minute
+    48 Second
 49 External Analog input 2 in calibrated units [V*10000]
 50 Sauter Mean Diameter [uncalibrated units]
-51 Total Volume Concentration [uncalibrated units]
-52 Relative Humidity [%]
-53 Accelerometer X [counts]
-54 Accelerometer Y [counts]
-55 Accelerometer Z [counts]
+    51 Total Volume Concentration [uncalibrated units]
+    52 Relative Humidity [%]
+    53 Accelerometer X [counts]
+    54 Accelerometer Y [counts]
+    55 Accelerometer Z [counts]
 56 Raw pressure [most significant bit]
 57 Raw pressure [least significant bit]
 58 Ambient light [counts]
