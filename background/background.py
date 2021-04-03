@@ -2,7 +2,29 @@ _err_incorrect_length = 'Source file does not have the correct number of lines: 
 import datetime as dt
 
 class background:
+    """Interpreter for the background files from the Sequoia LISST-200x.
 
+    Files are in an ASCII format, each line representing one value (scientific notation).
+    Each line ends with with 'comma\r\n':
+        01-36 Raw ring values [counts],
+        37 Laser transmission Sensor [counts],
+        38 Supply voltage in cal. units [V*100],
+        39 External Analog input 1 in cal. units [V*10000],
+        40 Laser Reference sensor in cal. units [counts],
+        41 Depth in cal. units [counts],
+        42 Temperature in cal. units [counts],
+        43-49 Y/M/D/H/M/S,
+        49 External Analog input 2 in cal. units [V*10000],
+        50 [NOT USED]Sauter Mean Diameter [uncal. units],
+        51 Total Volume Concentration [uncal. units],
+        52 Relative Humidity [%],
+        53-56 Accelerometer X/Y/Z [counts],
+        56-58 Raw pressure MSB/LSB,
+        58 Ambient light [counts],
+        59 [NOT USED],
+        60 0.000000e+000,
+    """
+    
     def __init__(self, source):
         self.counts = []
         self.laser_trans_sens = None
