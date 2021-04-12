@@ -21,31 +21,31 @@ class background:
         53-56 Accelerometer X/Y/Z [counts],
         56-58 Raw pressure MSB/LSB,
         58 Ambient light [counts],
-        59 [NOT USED],
-        60 0.000000e+000,
+        59 [NOT USED]: 0.000000e+000,
+        60 [NOT USED]: empty line
     """
     
     def __init__(self, source):
         self.counts = []
-        self.laser_trans_sens = None
-        self.laser_ref_sens = None
-        self.volt_supply = None
-        self.depth = None
-        self.temperature = None
-        self.date = dt.datetime(1900,1,1)
-        self.total_vol_conc = None
-        self.rh = None
-        self.acc_xyz = [None] * 3
-        self.raw_press = None
-        self.ambient_light = None
-
+        self.laser_trans_sens_counts = None
+        self.laser_ref_sens_counts = None
+        self.volt_supply_volt = None
+        self.depth_counts = None
+        self.temperature_degc = None
+        self.datetime = dt.datetime(1900,1,1)
+        self.total_vol_conc_uncal_counts = None
+        self.rh_pct = None
+        self.acc_xyz_counts = [None] * 3
+        self.raw_press_noidea = None
+        self.ambient_light_counts = None
         self._parse_source(source)
 
     def _parse_source(self, source):
+        """Get data from the file"""
         self._tmp = []
         with open(source) as src:
             for line in src:
-                self._tmp.append(line.strip())
+                self._tmp.append(float(line.strip().replace(',','')))
 
         if len(self._tmp) != 59:
             raise TypeError(_err_incorrect_length.format(len(self._tmp)))
@@ -54,26 +54,36 @@ class background:
         self._get_aux_data()
         
     def _get_rings(self):
+        """First 36 values are ring counts"""
         self.counts = self._tmp[0:35]
         # TODO: convert to float
 
     def _get_aux_data(self):
-        self.laser_trans_sens = self._tmp[36]
-        self.laser_ref_sens = self._tmp[39]
-        self.volt_supply = self._tmp[37]  # should divide by 100
-        self.depth = self._tmp[40]
-        self.temperature = self._tmp[41]
+        """Other values are auxillary data"""
+        self.laser_trans_sens_counts = self._tmp[36]
+        self.laser_ref_sens_counts = self._tmp[39]
+        print(self._tmp[37])
+        print(type(self._tmp[37]))
+        self.volt_supply_volt = self._tmp[37] / 100
+        self.depth_counts = self._tmp[40]
+        self.temperature_degc = self._tmp[41] / 1000
         self._get_datetime()
-        self.total_vol_conc = self._tmp[50]
-        self.rh = self._tmp[51]
-        self.acc_xyz = self._tmp[52:55]
-        self._get_pressure()
-        self.ambient_light = self._tmp[57]
+        self.total_vol_conc_uncal_counts = self._tmp[50]
+        self.rh_pct = self._tmp[51]
+        self.acc_xyz_counts = [i for i in self._tmp[52:55]]
+        self._get_raw_pressure()
+        self.ambient_light_counts = self._tmp[57]
 
     def _get_datetime(self):
-        pass
+        """Get date/time from 6 split lines/elements"""
+        dt_temp = [int(i) for i in self._tmp[42:48]]
+        self.datetime = dt.datetime(*dt_temp)
 
-    def _get_pressure(self):
+    def _get_raw_pressure(self):
+        """ 
+        According to datasheet: 56-58 Raw pressure MSB/LSB.
+        No idea how to interpret this if values are floats.
+        """
         pass
 
 
