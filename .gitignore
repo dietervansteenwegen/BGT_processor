@@ -137,6 +137,9 @@ dmypy.json
 # Cython debug symbols
 cython_debug/
 
+# Zipped files
+*.zip
+
 # created plots
 plots/
 
