@@ -23,6 +23,7 @@ class background:
         58 Ambient light [counts],
         59 [NOT USED]: 0.000000e+000,
         60 [NOT USED]: empty line
+    Newer versions of the software use a comma instead of a point in the decimal notation (5,400000e+004 instead of 5.400000e+004)
     """
     
     def __init__(self, source):
@@ -45,7 +46,9 @@ class background:
         self._tmp = []
         with open(source) as src:
             for line in src:
-                self._tmp.append(float(line.strip().replace(',','')))
+                line = line.strip()[:-1]  # get rid of EOL and last comma
+                line = line.replace(',', '.')  # if there still is a comma, it is used as decimal point
+                self._tmp.append(float(line))
 
         if len(self._tmp) != 59:
             raise TypeError(_err_incorrect_length.format(len(self._tmp)))
@@ -62,8 +65,6 @@ class background:
         """Other values are auxillary data"""
         self.laser_trans_sens_counts = self._tmp[36]
         self.laser_ref_sens_counts = self._tmp[39]
-        print(self._tmp[37])
-        print(type(self._tmp[37]))
         self.volt_supply_volt = self._tmp[37] / 100
         self.depth_counts = self._tmp[40]
         self.temperature_degc = self._tmp[41] / 1000

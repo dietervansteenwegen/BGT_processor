@@ -1,9 +1,10 @@
-import argparse
 from background import background as bg
+from plot import plot_single_bgt_func
 import os
-
 file = r'E:\Projects\BGT_processor\background_files\Background 2028 05okt2017.bgt'
+directory = r'E:\Projects\BGT_processor\background_files'
 
-backg = bg(file)
-for i in dir(backg):
-    print('{}: {}'.format(i,getattr(backg,i).strip()))
+for file in os.listdir(directory):
+    print(file)
+    backg = bg(r'{}\{}'.format(directory, file))
+    plot_single_bgt_func(backg)
